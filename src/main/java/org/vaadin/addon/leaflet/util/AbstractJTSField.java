@@ -135,6 +135,8 @@ public abstract class AbstractJTSField<T extends Geometry> extends
 
 	protected abstract void prepareDrawing();
 
+	protected abstract void prepareViewing();
+	
 	public Configurator getConfigurator() {
 		return configurator;
 	}
@@ -164,4 +166,16 @@ public abstract class AbstractJTSField<T extends Geometry> extends
 		}
 	}
 
+	public void setReadOnly(boolean readOnly) {
+		super.setReadOnly(readOnly);
+		if(readOnly == true) {
+			prepareViewing();
+		} else {
+			if(getInternalValue() == null) {
+				prepareDrawing();
+			} else {
+				prepareEditing();
+			}
+		}
+	}
 }
